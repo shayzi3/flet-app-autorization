@@ -32,38 +32,35 @@ class MyApp:
                
                self.page.update()
           
-          theme = ft.Row(
+          theme_sign = ft.Row(
                controls=[
                     ft.IconButton(
                          icon=ft.icons.DARK_MODE, 
                          icon_size=18, 
                          on_click=change_theme_mode,
                          style=ft.ButtonStyle(color={'':ft.colors.WHITE, 'selected': ft.colors.BLACK})
-                    ) 
+                    ),
+                    ft.Row(
+                         controls=[
+                              ft.TextButton(text='Sign Up')
+                         ],
+                         height=53
+                    ),
+                         
                ],
-               height=230,
+               height=225,
                vertical_alignment=ft.CrossAxisAlignment.END,
-               alignment=ft.MainAxisAlignment.START
+               alignment=ft.MainAxisAlignment.START,
+               spacing=350
           )
            
-          sign_up = ft.TextButton(text='Register')
           log_in = ft.TextButton(text='Sign In')
           username = ft.TextField(width=300, border_color='white', label='Username')
           password = ft.TextField(width=300, border_color='white', label='Password', password=True)
           
           data = ft.Column(
                controls=[
-                    ft.Row(
-                         controls=[
-                              ft.Text('Sign In', theme_style=ft.TextThemeStyle.TITLE_MEDIUM),
-                              sign_up
-                         ],
-                         width=500,
-                         height=45,
-                         alignment=ft.MainAxisAlignment.CENTER,
-                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                         spacing=160
-                    ),
+                    ft.Text('Hello ...', theme_style=ft.TextThemeStyle.TITLE_MEDIUM),
                     username,
                     password,
                     log_in
@@ -77,7 +74,7 @@ class MyApp:
           
           self.page.add(
                data,
-               theme
+               theme_sign
           )
           
 
