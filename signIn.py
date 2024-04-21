@@ -1,9 +1,11 @@
 
 import flet as ft 
 
-from back import login_check, new_data
+from back import login_check
+import signUp as sp
 
-class Main:
+
+class MainLogIn:
      def __init__(self, page: ft.Page) -> None:
           self.page = page
           
@@ -22,7 +24,6 @@ class MyApp:
           
              
      def logIn_page(self) -> None:
-          
           def change_theme_vidgets():
                username.border_color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
                password.border_color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
@@ -58,19 +59,26 @@ class MyApp:
                
                self.page.update()
                
-          def load_data(e: ft.ControlEvent) -> None:
+               
+          def data(e: ft.ControlEvent) -> None:
                if username.value and password.value:
                     if not login_check(username.value):
-                         if new_data(username.value, password.value):
-                              text_name.value = 'Регистрация прошла успешно!'
+                         text_name.value = 'Такого аккаунта не существует!'
+                         
+                    elif login_check(username.value) == int(password.value):
+                         text_name.value = 'Регистация прошла успешно!'
                          
                     else:
-                         text_name.value = 'Такой логин уже есть!'
-                         
+                         text_name.value = 'Неправильный пароль от аккаунта!'
                self.page.update()
+               
+               
+          def going_register(e: ft.ControlEvent) -> None:
+               self.page.controls.clear()
+               main = sp.MainReg(self.page)
                          
           
-          sign_up = ft.ElevatedButton(text='Sign Up', color='white')
+          sign_up = ft.ElevatedButton(text='Sign Up', color='white', on_click=going_register)
           theme_sign = ft.Row(
                controls=[
                     ft.IconButton(
@@ -93,7 +101,7 @@ class MyApp:
                spacing=325
           )
           
-          log_in = ft.ElevatedButton(text='Sign In', color='white', on_click=load_data)
+          log_in = ft.ElevatedButton(text='Sign In', color='white', on_click=data)
           password_button = ft.IconButton(icon=ft.icons.REMOVE_RED_EYE, icon_size=15, on_click=check_password)
           username = ft.TextField(width=300, label='Username', border_color='white', on_change=hello)
           password = ft.TextField(width=300, label='Password', border_color='white', password=True)
@@ -129,7 +137,7 @@ class MyApp:
           
 
 def start():
-     ft.app(Main)
+     ft.app(MainLogIn)
      
 if __name__ == '__main__':
      start()

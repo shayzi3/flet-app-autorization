@@ -11,6 +11,7 @@ def maker() -> None:
                )""")
           db.commit()
      cursor.close()
+     
           
 
 def login_check(login: str) -> bool:
@@ -18,17 +19,22 @@ def login_check(login: str) -> bool:
           cursor = db.cursor()
           
           check = cursor.execute("SELECT login FROM reg WHERE login = ?", [login]).fetchone()
-     cursor.close()     
+         
+          if not check:
+               return None   
+          
+          if check:
+               return cursor.execute("SELECT password FROM reg WHERE login = ?", [login]).fetchone()[0]    
+     cursor.close() 
      
-     if not check:
-          return None   
-     return True
+
 
 def new_data(login: str, password: int) -> bool:
      with sql.connect('app.db') as db:
           cursor = db.cursor()
           
-          cursor.execute("INSERT INTO reg VALUES(?, ?)", [login, password])
+          cursor.execute("INSERT INTO reg(login) VALUES(?)", [login])
+          cursor.execute("UPDATE reg SET password = ? WHERE login = ?", [password, login])
           db.commit()
-     return True
+     cursor.close()
 
