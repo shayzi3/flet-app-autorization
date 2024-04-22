@@ -6,19 +6,19 @@ def maker() -> None:
           cursor = db.cursor()
           
           cursor.execute("""CREATE TABLE IF NOT EXISTS reg(
+               name STR,
                login STR,
                password INT
                )""")
           db.commit()
      cursor.close()
-     
           
 
 def login_check(login: str) -> bool:
      with sql.connect('app.db') as db:
           cursor = db.cursor()
           
-          check = cursor.execute("SELECT login FROM reg WHERE login = ?", [login]).fetchone()
+          check = cursor.execute("SELECT name FROM reg WHERE login = ?", [login]).fetchone()
          
           if not check:
                return None   
@@ -29,12 +29,14 @@ def login_check(login: str) -> bool:
      
 
 
-def new_data(login: str, password: int) -> bool:
+def new_data(login: str, password: int, name: str) -> bool:
      with sql.connect('app.db') as db:
           cursor = db.cursor()
           
-          cursor.execute("INSERT INTO reg(login) VALUES(?)", [login])
+          cursor.execute("INSERT INTO reg(login, name) VALUES(?, ?)", [login, name])
           cursor.execute("UPDATE reg SET password = ? WHERE login = ?", [password, login])
           db.commit()
+          
      cursor.close()
-
+     
+     return True

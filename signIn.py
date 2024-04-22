@@ -1,7 +1,7 @@
 
 import flet as ft 
 
-from back import login_check
+import back
 import signUp as sp
 
 
@@ -24,20 +24,22 @@ class MyApp:
           
              
      def logIn_page(self) -> None:
-          def change_theme_vidgets():
-               username.border_color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
-               password.border_color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
-               log_in.color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
-               sign_up.color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
-               password_button.icon_color = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
+          def change_theme_vidgets(color_: str):
+               username.border_color = color_
+               password.border_color = color_
+               log_in.color = color_
+               sign_up.color = color_
+               password_button.icon_color = color_
                
            
           def change_theme_mode(e: ft.ControlEvent) -> None:
                self.page.theme_mode = ft.ThemeMode.DARK if self.page.theme_mode.name == 'LIGHT' else ft.ThemeMode.LIGHT
+               
                e.control.icon = ft.icons.DARK_MODE if self.page.theme_mode.name == 'DARK' else ft.icons.WB_SUNNY_OUTLINED
-     
                e.control.selected = not e.control.selected 
-               change_theme_vidgets()      
+               
+               color_ = 'black' if self.page.theme_mode.name == 'LIGHT' else 'white'
+               change_theme_vidgets(color_)      
                
                self.page.update()
                
@@ -62,10 +64,10 @@ class MyApp:
                
           def data(e: ft.ControlEvent) -> None:
                if username.value and password.value:
-                    if not login_check(username.value):
+                    if not back.login_check(username.value):
                          text_name.value = 'Такого аккаунта не существует!'
                          
-                    elif login_check(username.value) == int(password.value):
+                    elif back.login_check(username.value) == int(password.value):
                          text_name.value = 'Регистация прошла успешно!'
                          
                     else:
@@ -102,7 +104,7 @@ class MyApp:
           )
           
           log_in = ft.ElevatedButton(text='Sign In', color='white', on_click=data)
-          password_button = ft.IconButton(icon=ft.icons.REMOVE_RED_EYE, icon_size=15, on_click=check_password)
+          password_button = ft.IconButton(icon=ft.icons.REMOVE_RED_EYE, icon_size=15, on_click=check_password, icon_color='white')
           username = ft.TextField(width=300, label='Username', border_color='white', on_change=hello)
           password = ft.TextField(width=300, label='Password', border_color='white', password=True)
           text_name =  ft.Text('Hello ...', theme_style=ft.TextThemeStyle.TITLE_MEDIUM)
