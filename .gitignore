@@ -1,1 +1,2 @@
-base.db
+app.db
+__pycache__/
