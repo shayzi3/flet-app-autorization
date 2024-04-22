@@ -56,6 +56,7 @@ class MyAppReg:
                password_check.icon_color = color_
                sign_up_.color = color_
                
+               
           def change_theme_mode(e: ft.ControlEvent) -> None:
                self.page.theme_mode = ft.ThemeMode.DARK if self.page.theme_mode.name == 'LIGHT' else ft.ThemeMode.LIGHT
                

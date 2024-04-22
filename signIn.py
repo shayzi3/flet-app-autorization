@@ -67,7 +67,7 @@ class MyApp:
                     if not back.login_check(username.value):
                          text_name.value = 'Такого аккаунта не существует!'
                          
-                    elif back.login_check(username.value) == int(password.value):
+                    elif back.login_check(username.value) == password.value:
                          text_name.value = 'Регистация прошла успешно!'
                          
                     else:

@@ -8,7 +8,7 @@ def maker() -> None:
           cursor.execute("""CREATE TABLE IF NOT EXISTS reg(
                name STR,
                login STR,
-               password INT
+               password STR
                )""")
           db.commit()
      cursor.close()
@@ -24,12 +24,12 @@ def login_check(login: str) -> bool:
                return None   
           
           if check:
-               return cursor.execute("SELECT password FROM reg WHERE login = ?", [login]).fetchone()[0]    
+               return str(cursor.execute("SELECT password FROM reg WHERE login = ?", [login]).fetchone()[0])
      cursor.close() 
      
 
 
-def new_data(login: str, password: int, name: str) -> bool:
+def new_data(login: str, password: str, name: str) -> bool:
      with sql.connect('app.db') as db:
           cursor = db.cursor()
           
